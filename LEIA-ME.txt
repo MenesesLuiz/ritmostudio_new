@@ -1,0 +1,9 @@
+RITMO STUDIO — Portfólio
+========================
+Abra index.html no navegador (ou publique em Netlify / Vercel / GitHub Pages).
+
+- Vídeos do YouTube: abrem em um player em tela cheia ao clicar.
+- Reels: embutidos direto do Instagram (precisam de internet).
+- Fotos: pasta fotos/ (baixadas do @ritmostudio___ em alta resolução).
+  Para trocar/adicionar, edite os <img src="fotos/..."> na seção "Fotos".
+- Contato: WhatsApp +55 91 98903-2895 · dedeptj@outlook.com

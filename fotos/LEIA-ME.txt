@@ -1,0 +1,24 @@
+RITMO STUDIO — Portfólio
+========================
+
+Abra o arquivo index.html no navegador (ou publique em Netlify / Vercel / GitHub Pages).
+
+FOTOS DO INSTAGRAM (@ritmostudio___)
+O Instagram bloqueia download automático, então salve as fotos manualmente
+e coloque nesta pasta "fotos" com os nomes:
+
+  fotos/01.jpg  (vertical)
+  fotos/02.jpg
+  fotos/03.jpg
+  fotos/04.jpg  (vertical)
+  fotos/05.jpg
+  fotos/06.jpg
+  fotos/perfil.jpg  (foto do filmmaker, seção "Sobre")
+
+Enquanto não existirem, o site mostra um espaço reservado com o nome do arquivo.
+
+VÍDEOS
+Os 3 vídeos do YouTube já estão embutidos (clique na thumb para tocar).
+Para adicionar mais, copie um bloco <div class="work" data-id="ID_DO_VIDEO"> no index.html.
+
+CONTATO já configurado: WhatsApp +55 91 98903-2895 · dedeptj@outlook.com · Brasil
