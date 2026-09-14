@@ -14,6 +14,15 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+section[id],
+header[id] {
+  scroll-margin-top: 112px;
+}
+
 html.lenis,
 html.lenis body {
   height: auto;
@@ -49,6 +58,26 @@ a {
   text-decoration: none;
 }
 
+:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 4px;
+}
+
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 5vw;
+  z-index: 10001;
+  padding: 10px 14px;
+  background: var(--fg);
+  color: var(--bg);
+  font-size: 0.8rem;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
 h1,
 h2,
 h3,
@@ -57,40 +86,6 @@ h3,
   font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 0.92;
-}
-
-.grain {
-  pointer-events: none;
-  position: fixed;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
-  z-index: 9998;
-  opacity: 0.06;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation: grain 8s steps(10) infinite;
-}
-
-@keyframes grain {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-  10% {
-    transform: translate(-5%, -10%);
-  }
-  30% {
-    transform: translate(3%, -15%);
-  }
-  50% {
-    transform: translate(12%, 9%);
-  }
-  70% {
-    transform: translate(9%, 4%);
-  }
-  90% {
-    transform: translate(-1%, 7%);
-  }
 }
 
 .cursor {
@@ -246,8 +241,29 @@ nav ul a:hover::after {
 }
 
 @media (max-width: 760px) {
+  nav {
+    padding-top: 14px;
+    padding-bottom: 14px;
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+
   nav ul {
+    display: flex;
+    order: 3;
+    flex: 0 0 100%;
+    gap: 24px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+
+  nav ul::-webkit-scrollbar {
     display: none;
+  }
+
+  nav ul a {
+    white-space: nowrap;
   }
 }
 
@@ -621,27 +637,6 @@ section {
   text-align: left;
 }
 
-.work::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.16;
-  mix-blend-mode: screen;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='card-noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23card-noise)' opacity='.8'/%3E%3C/svg%3E");
-  background-size: 220px 220px;
-  animation: cardGrain 0.45s steps(2) infinite;
-}
-
-@keyframes cardGrain {
-  0% { background-position: 0 0; }
-  25% { background-position: 18px -12px; }
-  50% { background-position: -10px 16px; }
-  75% { background-position: 14px 8px; }
-  100% { background-position: -16px -18px; }
-}
-
 .work.big {
   grid-column: span 12;
   aspect-ratio: 21 / 9;
@@ -826,6 +821,23 @@ section {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 18px;
+  scroll-behavior: smooth;
+}
+
+.reel-carousel {
+  position: relative;
+}
+
+.reel-controls {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  left: 10px;
+  z-index: 3;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 @media (max-width: 1000px) {
@@ -834,10 +846,47 @@ section {
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 760px) {
   .reel-grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 12px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
   }
+
+  .reel-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .reel-controls {
+    display: flex;
+  }
+
+  .reel {
+    flex: 0 0 min(82vw, 360px);
+    max-height: 640px;
+    scroll-snap-align: start;
+  }
+
+}
+
+.reel-nav {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--bg2);
+  color: var(--fg);
+  font: 1.25rem/1 Inter, sans-serif;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.reel-nav:active {
+  background: var(--accent);
 }
 
 .reel {
@@ -1241,7 +1290,6 @@ footer {
     display: none;
   }
 
-  .grain,
   .wave i,
   .scroll-hint i,
   .rec i {
@@ -1266,7 +1314,4 @@ footer {
     color: var(--accent);
   }
 
-  .work::after {
-    animation: none;
-  }
 }

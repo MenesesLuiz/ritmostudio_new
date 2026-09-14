@@ -1,3 +1,5 @@
+import { useRef } from "react";
+
 type Translation = Record<string, string>;
 
 type Language = "pt" | "en" | "es";
@@ -35,9 +37,9 @@ export function SiteNavigation({
   t,
 }: Pick<SiteSectionsProps, "language" | "onLanguageChange" | "t">) {
   return (
-    <nav>
+    <nav aria-label="Navegação principal">
       <a href="#top" className="logo">
-        <img src="/fotos/ritmo_perfil.jpg" alt="" className="logo-img" />
+        <img src="/fotos/ritmo_perfil.jpg" alt="" className="logo-img" loading="eager" decoding="async" />
         RITMO<b>.</b>STUDIO
       </a>
       <ul>
@@ -66,7 +68,7 @@ export function SiteNavigation({
 export function HeroSection({ t }: { t: Translation }) {
   return (
     <header className="hero" id="top">
-      <div className="hero-bg"><img src="/fotos/ritmo_warung_01.jpg" alt="" /></div>
+      <div className="hero-bg"><img src="/fotos/ritmo_warung_01.jpg" alt="" loading="eager" fetchPriority="high" decoding="async" /></div>
       <div className="frame" />
       <div className="rec"><i /> REC 00:00:00:00</div>
       <div className="hero-content">
@@ -161,18 +163,33 @@ export function WorksSection({ t, workItems, onOpenVideo }: Pick<SiteSectionsPro
 }
 
 export function ReelsSection({ t, reels }: Pick<SiteSectionsProps, "t" | "reels">) {
+  const reelGridRef = useRef<HTMLDivElement>(null);
+
+  const moveReels = (direction: number) => {
+    const grid = reelGridRef.current;
+    const card = grid?.querySelector<HTMLElement>(".reel");
+    if (!grid || !card) return;
+    grid.scrollBy({ left: direction * (card.offsetWidth + 16), behavior: "smooth" });
+  };
+
   return (
     <section id="reels" className="reels">
       <div className="section-head reveal">
         <h2><small>02 — Instagram</small>Reels</h2>
         <p>{t.r_p1} <a href="https://www.instagram.com/ritmostudio___/" target="_blank" rel="noreferrer">@ritmostudio___</a>. {t.r_p2}</p>
       </div>
-      <div className="reel-grid">
-        {reels.map((src) => (
-          <div className="reel reveal" key={src}>
-            <iframe src={src} loading="lazy" allowFullScreen scrolling="no" allow="encrypted-media" title="Ritmo Studio reel" />
-          </div>
-        ))}
+      <div className="reel-carousel">
+        <div ref={reelGridRef} className="reel-grid" id="instagram-reels">
+          {reels.map((src) => (
+            <div className="reel reveal" key={src}>
+              <iframe src={src} loading="lazy" allowFullScreen scrolling="no" allow="encrypted-media" title="Ritmo Studio reel" />
+            </div>
+          ))}
+        </div>
+        <div className="reel-controls" aria-label="Navegação dos posts do Instagram">
+          <button type="button" className="reel-nav" aria-label="Post anterior" aria-controls="instagram-reels" onClick={() => moveReels(-1)}>←</button>
+          <button type="button" className="reel-nav" aria-label="Próximo post" aria-controls="instagram-reels" onClick={() => moveReels(1)}>→</button>
+        </div>
       </div>
     </section>
   );
@@ -209,7 +226,7 @@ export function GallerySection({ t, gallery }: Pick<SiteSectionsProps, "t" | "ga
       <div className="gallery">
         {gallery.map(([file, alt, layout]) => (
           <div className={`item ${layout} reveal`} key={file}>
-            <img src={`/fotos/${file}`} alt={alt} />
+            <img src={`/fotos/${file}`} alt={alt} loading="lazy" decoding="async" />
           </div>
         ))}
       </div>
@@ -231,9 +248,9 @@ export function AboutSection({ t, venues }: Pick<SiteSectionsProps, "t" | "venue
           <div className="venues reveal"><small>{t.a_v}</small>{venues.map((venue) => <span key={venue}>{venue}</span>)}</div>
         </div>
         <div className="about-visual reveal">
-          <img src="/fotos/ritmo_aloha_03.jpg" alt="Ritmo Studio" className="main" />
+          <img src="/fotos/ritmo_aloha_03.jpg" alt="Ritmo Studio" className="main" loading="lazy" decoding="async" />
           <span className="tag">SANTA CATARINA · BR</span>
-          <img src="/fotos/ritmo_perfil.jpg" alt="" className="about-logo" />
+          <img src="/fotos/ritmo_perfil.jpg" alt="" className="about-logo" loading="lazy" decoding="async" />
         </div>
       </div>
     </section>

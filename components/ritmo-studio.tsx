@@ -301,12 +301,14 @@ export default function RitmoStudio() {
     let ringX = 0;
     let ringY = 0;
     let cursorFrame = 0;
+    const hasFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
     const onMouseMove = (event: MouseEvent) => {
       mouseX = event.clientX;
       mouseY = event.clientY;
       if (cursor) {
-        cursor.style.transform = `translate(${mouseX - 7}px, ${mouseY - 7}px)`;
+        cursor.style.left = `${mouseX}px`;
+        cursor.style.top = `${mouseY}px`;
       }
     };
 
@@ -314,7 +316,8 @@ export default function RitmoStudio() {
       ringX = lerp(ringX, mouseX, 0.15);
       ringY = lerp(ringY, mouseY, 0.15);
       if (cursorRing) {
-        cursorRing.style.transform = `translate(${ringX - 20}px, ${ringY - 20}px)`;
+        cursorRing.style.left = `${ringX}px`;
+        cursorRing.style.top = `${ringY}px`;
       }
       cursorFrame = requestAnimationFrame(animateCursor);
     };
@@ -322,13 +325,6 @@ export default function RitmoStudio() {
     const interactiveElements = root.querySelectorAll<HTMLElement>("a, .work, .spec");
     const onHoverStart = () => document.body.classList.add("hovering");
     const onHoverEnd = () => document.body.classList.remove("hovering");
-
-    window.addEventListener("mousemove", onMouseMove);
-    interactiveElements.forEach((element) => {
-      element.addEventListener("mouseenter", onHoverStart);
-      element.addEventListener("mouseleave", onHoverEnd);
-    });
-    cursorFrame = requestAnimationFrame(animateCursor);
 
     const loader = root.querySelector<HTMLElement>(".loader");
     const loaderTitle = loader?.querySelector<HTMLElement>(".display span");
@@ -352,7 +348,7 @@ export default function RitmoStudio() {
         timers.push(
           window.setTimeout(() => {
             loaderBar.style.width = "100%";
-          }, 400),
+          }, 250),
           window.setTimeout(() => {
             loader.style.transform = "translateY(-100%)";
             heroLines.forEach((element, index) => {
@@ -364,10 +360,10 @@ export default function RitmoStudio() {
               element.style.opacity = "1";
               element.style.translate = "0 0";
             });
-          }, 1700),
+          }, 1100),
           window.setTimeout(() => {
             loader.style.display = "none";
-          }, 2700),
+          }, 1800),
         );
       });
     });
@@ -375,7 +371,7 @@ export default function RitmoStudio() {
     const rec = root.querySelector<HTMLElement>(".rec");
     let frameCount = 0;
     const timecode = window.setInterval(() => {
-      frameCount += 1;
+      frameCount += 6;
       const seconds = Math.floor(frameCount / 24);
       const minutes = Math.floor(seconds / 60);
       if (rec?.lastChild) {
@@ -383,7 +379,16 @@ export default function RitmoStudio() {
           seconds % 60,
         ).padStart(2, "0")}:${String(frameCount % 24).padStart(2, "0")}`;
       }
-    }, 1000 / 24);
+    }, 250);
+
+    if (hasFinePointer) {
+      window.addEventListener("mousemove", onMouseMove);
+      interactiveElements.forEach((element) => {
+        element.addEventListener("mouseenter", onHoverStart);
+        element.addEventListener("mouseleave", onHoverEnd);
+      });
+      cursorFrame = requestAnimationFrame(animateCursor);
+    }
 
     return () => {
       window.removeEventListener("mousemove", onMouseMove);
@@ -582,7 +587,7 @@ export default function RitmoStudio() {
 
   return (
     <div ref={rootRef}>
-      <div className="grain" />
+      <a className="skip-link" href="#main-content">Pular para o conteúdo</a>
       <div className="cursor" />
       <div className="cursor-ring" />
 
@@ -600,18 +605,20 @@ export default function RitmoStudio() {
         onLanguageChange={changeLanguage}
         t={t}
       />
-      <HeroSection t={t} />
-      <ManifestoSection t={t} manifestoWords={manifestoWords} />
-      <WorksSection
-        t={t}
-        workItems={workItems}
-        onOpenVideo={setLightboxVideo}
-      />
-      <ReelsSection t={t} reels={reels} />
-      <ServicesSection t={t} services={services} />
-      <GallerySection t={t} gallery={gallery} />
-      <AboutSection t={t} venues={venues} />
-      <ContactSection t={t} />
+      <main id="main-content">
+        <HeroSection t={t} />
+        <ManifestoSection t={t} manifestoWords={manifestoWords} />
+        <WorksSection
+          t={t}
+          workItems={workItems}
+          onOpenVideo={setLightboxVideo}
+        />
+        <ReelsSection t={t} reels={reels} />
+        <ServicesSection t={t} services={services} />
+        <GallerySection t={t} gallery={gallery} />
+        <AboutSection t={t} venues={venues} />
+        <ContactSection t={t} />
+      </main>
       <VideoLightbox videoId={lightboxVideo} onClose={() => setLightboxVideo(null)} />
       <SiteFooter t={t} />
       <WhatsAppFloat />
