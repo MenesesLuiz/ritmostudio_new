@@ -1,6 +1,6 @@
-import { useRef } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 
-type Translation = Record<string, string>;
+type Translation = Record<string, ReactNode>;
 
 type Language = "pt" | "en" | "es";
 
@@ -26,10 +26,6 @@ type SiteSectionsProps = {
   venues: string[];
   onOpenVideo: (videoId: string) => void;
 };
-
-function RichText({ html }: { html: string }) {
-  return <span dangerouslySetInnerHTML={{ __html: html }} />;
-}
 
 export function SiteNavigation({
   language,
@@ -121,7 +117,7 @@ export function WorksSection({ t, workItems, onOpenVideo }: Pick<SiteSectionsPro
   return (
     <section id="trabalhos">
       <div className="section-head reveal">
-        <h2><small>{t.w_k}</small><RichText html={t.w_h} /></h2>
+        <h2><small>{t.w_k}</small>{t.w_h}</h2>
         <p>{t.w_p}</p>
       </div>
       <div className="works-scroll">
@@ -220,7 +216,7 @@ export function GallerySection({ t, gallery }: Pick<SiteSectionsProps, "t" | "ga
   return (
     <section id="fotos">
       <div className="section-head reveal">
-        <h2><small>04 — Frames</small><RichText html={t.f_h} /></h2>
+        <h2><small>04 — Frames</small>{t.f_h}</h2>
         <p>{t.f_p} <a href="https://www.instagram.com/ritmostudio___/" target="_blank" rel="noreferrer">@ritmostudio___</a>.</p>
       </div>
       <div className="gallery">
@@ -243,7 +239,7 @@ export function AboutSection({ t, venues }: Pick<SiteSectionsProps, "t" | "venue
     <section id="sobre">
       <div className="about">
         <div>
-          <h2 className="reveal"><RichText html={t.a_h} /></h2>
+          <h2 className="reveal">{t.a_h}</h2>
           <p className="reveal">{t.a_p}</p>
           <div className="venues reveal"><small>{t.a_v}</small>{venues.map((venue) => <span key={venue}>{venue}</span>)}</div>
         </div>
@@ -260,7 +256,7 @@ export function AboutSection({ t, venues }: Pick<SiteSectionsProps, "t" | "venue
 export function ContactSection({ t }: { t: Translation }) {
   return (
     <section className="contact" id="contato">
-      <h2 className="reveal"><RichText html={t.c_h} /></h2>
+      <h2 className="reveal">{t.c_h}</h2>
       <p className="reveal">{t.c_p}</p>
       <div className="contact-links reveal">
         <a className="btn wa" href="https://wa.me/5591989032895?text=Ol%C3%A1!%20Vi%20seu%20portf%C3%B3lio%20e%20quero%20conversar%20sobre%20um%20projeto." target="_blank" rel="noreferrer">
@@ -282,10 +278,32 @@ export function ContactSection({ t }: { t: Translation }) {
 }
 
 export function VideoLightbox({ videoId, onClose }: { videoId: string | null; onClose: () => void }) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog || !videoId) return;
+
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    dialog.showModal();
+    dialog.querySelector<HTMLButtonElement>(".close")?.focus();
+
+    return () => {
+      if (dialog.open) dialog.close();
+      previouslyFocused?.focus();
+    };
+  }, [videoId]);
+
   if (!videoId) return null;
 
   return (
-    <div className="lb open" onClick={(event) => { if (event.target === event.currentTarget) onClose(); }}>
+    <dialog
+      ref={dialogRef}
+      className="lb open"
+      aria-label="Vídeo do projeto"
+      onCancel={(event) => { event.preventDefault(); onClose(); }}
+    >
+      <button className="lb-backdrop" type="button" aria-label="Fechar vídeo" onClick={onClose} />
       <button className="close" type="button" aria-label="Fechar" onClick={onClose}>✕</button>
       <div className="box">
         <iframe
@@ -295,7 +313,7 @@ export function VideoLightbox({ videoId, onClose }: { videoId: string | null; on
           allowFullScreen
         />
       </div>
-    </div>
+    </dialog>
   );
 }
 

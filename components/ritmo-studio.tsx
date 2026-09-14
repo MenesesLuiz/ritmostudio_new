@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   AboutSection,
   ContactSection,
@@ -34,7 +34,7 @@ type Translation = {
   mani_l: string;
   mani_r: string;
   w_k: string;
-  w_h: string;
+  w_h: ReactNode;
   w_p: string;
   r_p1: string;
   r_p2: string;
@@ -51,13 +51,13 @@ type Translation = {
   s4d: string;
   s5: string;
   s5d: string;
-  f_h: string;
+  f_h: ReactNode;
   f_p: string;
   f_cta: string;
-  a_h: string;
+  a_h: ReactNode;
   a_p: string;
   a_v: string;
-  c_h: string;
+  c_h: ReactNode;
   c_p: string;
   c_loc: string;
   foot: string;
@@ -79,7 +79,7 @@ const translations: Record<Language, Translation> = {
     mani_l: "Captação · Edição · Cor · Som",
     mani_r: "Eventos · Artistas · Marcas",
     w_k: "01 — Portfólio",
-    w_h: "Trabalhos<br>selecionados",
+    w_h: <>Trabalhos<br />selecionados</>,
     w_p: "Alguns projetos editados e filmados recentemente. Clique para assistir.",
     r_p1: "Direto do",
     r_p2: "Toque para assistir.",
@@ -96,13 +96,13 @@ const translations: Record<Language, Translation> = {
     s4d: "Os melhores momentos do set em cortes multicâmera rápidos, feitos para viralizar.",
     s5: "Mini documentaries",
     s5d: "Histórias curtas sobre artistas, eventos e bastidores, com olhar cinematográfico.",
-    f_h: "Fotos &amp; bastidores",
+    f_h: <>Fotos &amp; bastidores</>,
     f_p: "Frames e registros direto do Instagram",
     f_cta: "Ver mais no Instagram",
-    a_h: "Cada frame<br>tem um <span>ritmo</span>",
+    a_h: <>Cada frame<br />tem um <span>ritmo</span></>,
     a_p: "Ritmo Studio é um estúdio de audiovisual baseado em Santa Catarina, Brasil. Trabalho com música eletrônica, festivais e artistas, capturando a energia do momento e transformando em vídeos que fazem quem assiste sentir que estava lá. Da captação à cor final, cuido de cada etapa do processo.",
     a_v: "Já passou por",
-    c_h: "Vamos <span>criar</span><br>algo juntos?",
+    c_h: <>Vamos <span>criar</span><br />algo juntos?</>,
     c_p: "Conte sobre o seu projeto — evento, live set, clipe ou conteúdo. Respondo rápido pelo WhatsApp.",
     c_loc: "📍 SANTA CATARINA · BRASIL · DISPONÍVEL PARA VIAGENS",
     foot: "Filmmaker · Editor · Brasil",
@@ -122,7 +122,7 @@ const translations: Record<Language, Translation> = {
     mani_l: "Shooting · Editing · Color · Sound",
     mani_r: "Events · Artists · Brands",
     w_k: "01 — Portfolio",
-    w_h: "Selected<br>work",
+    w_h: <>Selected<br />work</>,
     w_p: "Some recently shot and edited projects. Click to watch.",
     r_p1: "Straight from",
     r_p2: "Tap to watch.",
@@ -139,13 +139,13 @@ const translations: Record<Language, Translation> = {
     s4d: "The best moments of the set in fast multicam cuts, made to go viral.",
     s5: "Mini documentaries",
     s5d: "Short stories about artists, events and backstage life, with a cinematic eye.",
-    f_h: "Photos &amp; backstage",
+    f_h: <>Photos &amp; backstage</>,
     f_p: "Frames and moments straight from Instagram",
     f_cta: "See more on Instagram",
-    a_h: "Every frame<br>has a <span>rhythm</span>",
+    a_h: <>Every frame<br />has a <span>rhythm</span></>,
     a_p: "Ritmo Studio is an audiovisual studio based in Santa Catarina, Brazil. We work with electronic music, festivals and artists, capturing the energy of the moment and turning it into videos that make viewers feel they were there. From shooting to final color, we handle every step of the process.",
     a_v: "Featured at",
-    c_h: "Let's <span>create</span><br>something together?",
+    c_h: <>Let's <span>create</span><br />something together?</>,
     c_p: "Tell us about your project — event, live set, music video or content. We reply fast on WhatsApp.",
     c_loc: "📍 SANTA CATARINA · BRAZIL · AVAILABLE FOR TRAVEL",
     foot: "Filmmaker · Editor · Brazil",
@@ -165,7 +165,7 @@ const translations: Record<Language, Translation> = {
     mani_l: "Grabación · Edición · Color · Sonido",
     mani_r: "Eventos · Artistas · Marcas",
     w_k: "01 — Portafolio",
-    w_h: "Trabajos<br>seleccionados",
+    w_h: <>Trabajos<br />seleccionados</>,
     w_p: "Algunos proyectos grabados y editados recientemente. Haz clic para ver.",
     r_p1: "Directo de",
     r_p2: "Toca para ver.",
@@ -182,13 +182,13 @@ const translations: Record<Language, Translation> = {
     s4d: "Los mejores momentos del set en cortes multicámara rápidos, hechos para viralizar.",
     s5: "Mini documentaries",
     s5d: "Historias cortas sobre artistas, eventos y backstage, con mirada cinematográfica.",
-    f_h: "Fotos &amp; backstage",
+    f_h: <>Fotos &amp; backstage</>,
     f_p: "Frames y registros directo de Instagram",
     f_cta: "Ver más en Instagram",
-    a_h: "Cada frame<br>tiene un <span>ritmo</span>",
+    a_h: <>Cada frame<br />tiene un <span>ritmo</span></>,
     a_p: "Ritmo Studio es un estudio audiovisual con base en Santa Catarina, Brasil. Trabajamos con música electrónica, festivales y artistas, capturando la energía del momento y transformándola en videos que hacen sentir a quien mira que estuvo ahí. De la grabación al color final, cuidamos cada etapa del proceso.",
     a_v: "Ha pasado por",
-    c_h: "¿<span>Creamos</span><br>algo juntos?",
+    c_h: <>¿<span>Creamos</span><br />algo juntos?</>,
     c_p: "Cuéntanos sobre tu proyecto — evento, live set, clip o contenido. Respondemos rápido por WhatsApp.",
     c_loc: "📍 SANTA CATARINA · BRASIL · DISPONIBLE PARA VIAJAR",
     foot: "Filmmaker · Editor · Brasil",
@@ -258,10 +258,6 @@ const venues = [
 ];
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-
-function RichText({ html }: { html: string }) {
-  return <span dangerouslySetInnerHTML={{ __html: html }} />;
-}
 
 export default function RitmoStudio() {
   const [language, setLanguage] = useState<Language>("pt");

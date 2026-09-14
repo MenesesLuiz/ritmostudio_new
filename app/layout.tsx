@@ -1,5 +1,19 @@
 import type { Metadata } from "next";
+import { Bebas_Neue, Inter } from "next/font/google";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
+
+const bebasNeue = Bebas_Neue({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-bebas",
+});
 
 export const metadata: Metadata = {
   title: "Ritmo Studio",
@@ -14,16 +28,10 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://img.youtube.com" />
         <link rel="preconnect" href="https://www.instagram.com" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap"
-          rel="stylesheet"
-        />
       </head>
-      <body>{children}</body>
+      <body className={`${inter.variable} ${bebasNeue.variable}`}>{children}</body>
     </html>
   );
 }

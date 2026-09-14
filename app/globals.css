@@ -43,7 +43,7 @@ html.lenis body {
 body {
   background: var(--bg);
   color: var(--fg);
-  font-family: "Inter", system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
   overflow-x: hidden;
   cursor: none;
 }
@@ -82,7 +82,7 @@ h1,
 h2,
 h3,
 .display {
-  font-family: "Bebas Neue", Impact, sans-serif;
+  font-family: var(--font-bebas), Impact, sans-serif;
   font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 0.92;
@@ -191,7 +191,7 @@ nav {
 }
 
 nav .logo {
-  font-family: "Bebas Neue";
+  font-family: var(--font-bebas);
   font-size: 1.6rem;
   letter-spacing: 0.12em;
   display: flex;
@@ -279,7 +279,7 @@ nav ul a:hover::after {
   background: none;
   border: 0;
   color: #fff;
-  font: 600 0.68rem Inter, sans-serif;
+  font: 600 0.68rem var(--font-inter), sans-serif;
   letter-spacing: 0.15em;
   padding: 7px 11px;
   border-radius: 100px;
@@ -515,7 +515,7 @@ nav ul a:hover::after {
 }
 
 .mani-text {
-  font-family: "Bebas Neue";
+  font-family: var(--font-bebas);
   font-size: clamp(2.6rem, 7vw, 7rem);
   line-height: 1;
   max-width: 1200px;
@@ -571,7 +571,7 @@ section {
 .section-head h2 small {
   display: block;
   font-size: 0.85rem;
-  font-family: "Inter";
+  font-family: var(--font-inter);
   letter-spacing: 0.3em;
   color: var(--accent);
   margin-bottom: 12px;
@@ -713,7 +713,7 @@ section {
 
 .work .info strong {
   display: block;
-  font-family: "Bebas Neue", Impact, sans-serif;
+  font-family: var(--font-bebas), Impact, sans-serif;
   font-size: 2rem;
   line-height: 1;
   font-weight: 400;
@@ -722,7 +722,7 @@ section {
 
 .work .info small {
   display: block;
-  font-family: "Inter";
+  font-family: var(--font-inter);
   font-size: 0.72rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
@@ -759,12 +759,29 @@ section {
   position: fixed;
   inset: 0;
   z-index: 5000;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  border: 0;
   background: rgba(0, 0, 0, 0.92);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 4vw;
   backdrop-filter: blur(10px);
+}
+
+.lb .lb-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
 }
 
 .lb .box {
@@ -775,6 +792,7 @@ section {
   overflow: hidden;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
   position: relative;
+  z-index: 1;
 }
 
 .lb iframe {
@@ -810,7 +828,7 @@ section {
   position: absolute;
   top: 22px;
   left: 26px;
-  font-family: "Bebas Neue";
+  font-family: var(--font-bebas);
   font-size: 1.3rem;
   letter-spacing: 0.1em;
   color: rgba(255, 255, 255, 0.7);
@@ -880,7 +898,7 @@ section {
   border-radius: 50%;
   background: var(--bg2);
   color: var(--fg);
-  font: 1.25rem/1 Inter, sans-serif;
+  font: 1.25rem/1 var(--font-inter), sans-serif;
   cursor: pointer;
   pointer-events: auto;
 }
@@ -932,7 +950,7 @@ section {
 }
 
 .svc .n {
-  font-family: "Bebas Neue";
+  font-family: var(--font-bebas);
   font-size: 1.4rem;
   color: var(--muted);
 }
